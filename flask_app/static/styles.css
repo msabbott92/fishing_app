@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.login-register-pages {
+  background: url('../static/assets/brown_trout_background.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.dashboard-page {
+  background: url('../static/assets/dashboard-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.blur-container {
+  position: relative;
+}
+
+.blur-background {
+  backdrop-filter: blur(4px); /* Adjust the blur value as needed */
+}
+
+#weather-info {
+  max-height: 40px;
+} 

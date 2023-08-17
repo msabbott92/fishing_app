@@ -1,17 +1,22 @@
-from flask import render_template, request, redirect, session, flash
+from flask import render_template, request, redirect, session, flash, request
 from flask_app import app
 from flask_bcrypt import Bcrypt  
 from flask_app.models.user_model import User
 from flask_app.models.car_model import Cars
-from flask_app.controllers import car_controller
+from flask_app.controllers import log_controller
+import requests
 
-
+API_KEY = '80ba011a0bb34c597f31f439084f2bd2'
 
 bcrypt = Bcrypt(app)
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/register")
+def register_page():
+    return render_template("register.html")
 
 @app.route('/register/user', methods=['POST'])
 def register():
