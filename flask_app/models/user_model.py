@@ -5,7 +5,7 @@ import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 class User:
-    db = "car_dealz_schema" 
+    db = "fishing_app" 
     def __init__(self, data):
         self.id = data['id']
         self.first_name = data['first_name']
@@ -67,4 +67,5 @@ class User:
     def get_one_by_id(cls, data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
         result = connectToMySQL(cls.db).query_db(query,data)
+        print(result)
         return cls(result[0])

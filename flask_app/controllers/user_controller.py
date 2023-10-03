@@ -2,7 +2,6 @@ from flask import render_template, request, redirect, session, flash, request
 from flask_app import app
 from flask_bcrypt import Bcrypt  
 from flask_app.models.user_model import User
-from flask_app.models.car_model import Cars
 from flask_app.controllers import log_controller
 import requests
 

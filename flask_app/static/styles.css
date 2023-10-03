@@ -13,15 +13,74 @@ body {
   background: url('../static/assets/dashboard-bg.jpg') no-repeat center center fixed;
   background-size: cover;
 }
+.view-log-page {
+  background: url('../static/assets/dashboard-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 
 .blur-container {
   position: relative;
 }
 
 .blur-background {
-  backdrop-filter: blur(4px); /* Adjust the blur value as needed */
+  backdrop-filter: blur(4px); 
 }
 
 #weather-info {
   max-height: 40px;
 } 
+
+.logs-title {
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+  color: #323734;
+}
+
+.logs-container {
+  min-height: 500px;
+  max-width: 750px;
+  background-color: #a6a499;
+  opacity: 0.9;
+  border-radius: 25px;
+  padding: 15px;
+}
+
+.log {
+  border: 2px solid #323734;
+
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  place-content: center;
+  background-color: #9bb7c0;
+
+}
+.log-icon {
+  border: 3px solid black;
+  border-radius: 15px;
+}
+.message-box{
+  background-color: #645d52;
+  max-width: 250px;
+  border-radius: 25px;
+  opacity: 0.9;
+}
+
+
+
+
+/* View Logs Page */
+
+.view-log-container {
+  margin-top: 150px;
+  background-color: #a6a499;
+  max-width: 550px;
+  min-width: 400px;
+  border-radius: 25px;
+  opacity: 0.9;
+
+}

@@ -6,10 +6,10 @@
     <title>Angler's Log</title>
     <link rel="stylesheet" href="../static/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
+  </head>
 <body class="dashboard-page">
-  <nav class="navbar navbar-expand-md bg-body-secondary px-4" style="--bs-bg-opacity: .50;">
-    <div class="container-fluid">
+  <nav class="navbar fixed-top navbar-expand-md bg-body-secondary px-4" style="--bs-bg-opacity: .50;">
+    <div class="container-xl">
       <a class="navbar-brand" href="#">Angler's Log</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -20,19 +20,13 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">New Log</a>
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#newLogModal">New Log</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Maps</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Photos</a>
+            <a class="nav-link" href="#logSection" class="logSectionLink">Logs</a>
           </li>
         </ul>
-        <div class="navbar-text me-3" id="weather-info">
+        <div class="navbar-text me-3 d-none d-md-flex" id="weather-info">
         </div>
         <span class="navbar-text">
           <a class="nav-link me-3" href="/logout" >Logout</a>
@@ -44,11 +38,122 @@
     <div class="row" style="min-height: 120px;"></div>
     <div class="row justify-content-center">
       <div class="col-5 align-self-center text-light">
-        <p class="fs-5">"The charm of fishing is that it is the pursuit of what is elusive but attainable, a perpetual series of occasions for hope"</p>
-        <p>- John Buchan</p>
+        <p class="fs-5" style="color: black">"The charm of fishing is that it is the pursuit of what is elusive but attainable, a perpetual series of occasions for hope"</p>
+        <p style="color: black">- John Buchan</p>
       </div>
     </div>
   </div>
+  <div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-warning opacity-75 mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#newLogModal">
+      New Log
+    </button>
+  </div>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="d-flex justify-content-center">
+      <div class="message-box p-2 px-3">
+        {% for message in messages %}
+          <p class="text-center text-danger">{{message}}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  {% endwith %}
+  <div class="modal fade" id="newLogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div id="flashModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="flash-message"></div>
+        </div>
+    </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create new Log:</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                  <p class="text-danger">{{message}}</p>
+                {% endfor %}
+            {% endif %}
+          {% endwith %}
+          <form action="/new/log" method="post" id="log-form">
+            <div class="mb-2">
+              <label for="date" class="form-label">Date:</label>
+              <input type="date" name = "date" class="form-control" id="date-input">
+            </div>
+            <div class="mb-2">
+              <label for="location" class="form-label">Location (if different than current):</label>
+              <input type="text" name = "location" class="form-control" id="log-location">
+            </div>
+            <div class="mb-2">
+              <label for="body_water" class="form-label">Body of Water:</label>
+              <input type="text" name = "body_water" class="form-control" placeholder="e.g. Colorado River">
+            </div>
+            <div class="mb-2">
+              <label for="temp" class="form-label">Weather(if different than current):</label>
+              <input type="number" name = "temp" class="form-control" id="log-weather">
+            </div>
+            <div class="mb-2">
+              <label for="fish_caught" class="form-label">Number of Fish:</label>
+              <input type="number" name = "fish_caught" class="form-control">
+            </div>
+            <div class="mb-2">
+              <label for="fish_type" class="form-label">Type of Fish:</label>
+              <input type="text" name = "fish_type" class="form-control">
+            </div>
+            <div class="mb-2">
+              <label for="flies_used" class="form-label">Flies used:</label>
+              <input type="text" name = "flies_used" class="form-control">
+            </div>
+            <label for="comments" class="mb-2">Comments:</label>
+              <textarea class="form-control mb-2" name="comments" rows="4"></textarea>
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary">Submit Log</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-lg mt-5 px-3 logs-container" id="logSection">
+    <div class="row">
+      <div class="col">
+        <h1 class="logs-title text-center mb-3">{{user.first_name}}'s Logs</h1>
+      </div>
+    </div>
+    <div class="row mb-2 px-2">
+      {% if logs %}
+        {% for log in logs %}
+      <div class="col-md-6">
+        <div class="row log g-0 rounded overflow-hidden flex-md-row mb-4 shadow-md h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary-emphasis">{{log.body_water}}</strong>
+            <h3 class="mb-0">{{log.date}}</h3>
+            <div class="mb-1 text-body-secondary">{{log.temp}} degrees</div>
+            <p class="card-text mb-auto">Number of Fish: {{log.fish_caught}} <br> Fish Species: {{log.fish_type}}</p>
+            <a href="/log/show/{{log.id}}" class="icon-link pt-2 gap-1 icon-link-hover stretched-link">
+              View Full Log
+            </a>
+          </div>
+          <div class="col-4 d-none d-lg-flex icon-container">
+              <img class="p-1 log-icon" src="../static/assets/icons8-river-100.png" alt="river" width="100">
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
