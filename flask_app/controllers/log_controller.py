@@ -15,7 +15,7 @@ def dashboard():
     data = {
         "id": session["user_id"]
     }
-    return render_template("dashboard.html",user = User.get_one_by_id(data), logs = Logs.get_all_logs(), show_modal=show_modal)
+    return render_template("dashboard.html",user = User.get_one_by_id(data), logs = Logs.get_all_logs_by_user(data), show_modal=show_modal)
 
 @app.route('/weather')
 def get_weather():

@@ -75,6 +75,26 @@ class Logs:
         return cls(results[0])
     
     @classmethod
+    def get_all_logs_by_user(cls, data):
+        query = "SELECT * FROM log LEFT JOIN users on log.user_id = users.id WHERE log.user_id = %(id)s;"
+        results = connectToMySQL(cls.db).query_db(query,data)
+        all_logs = []
+        for row in results:
+            log_by_user = cls(row)
+            user_info = {
+                "id":row["users.id"],
+                "first_name": row["first_name"],
+                "last_name": row["last_name"],
+                "email": row["email"],
+                "password": row["password"],
+                "created_at": row["users.created_at"],
+                "updated_at": row["users.updated_at"]
+            }
+            log_by_user.user = User(user_info)
+            all_logs.append(log_by_user)
+        return all_logs
+    
+    @classmethod
     def update(cls, data):
         print("got to model")
         query = "UPDATE log SET date = %(date)s, location = %(location)s, body_water = %(body_water)s, temp = %(temp)s, fish_caught = %(fish_caught)s, fish_type = %(fish_type)s, flies_used = %(flies_used)s, comments = %(comments)s, updated_at = NOW() WHERE id = %(id)s;"
